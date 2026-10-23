@@ -1,0 +1,146 @@
+{
+  "realm": "beacon",
+  "enabled": true,
+  "displayName": "Beacon Pilot",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "roles": {
+    "realm": [
+      {"name": "viewer", "description": "Read-only access to skills and evaluations"},
+      {"name": "operator", "description": "Can create and manage skills, run evaluations"},
+      {"name": "admin", "description": "Full administrative access"}
+    ],
+    "client": {
+      "beacon-pilot": {
+        "roles": [
+          {"name": "viewer", "description": "Read-only access"},
+          {"name": "operator", "description": "Create/manage skills and evaluations"},
+          {"name": "admin", "description": "Administrative access"}
+        ]
+      }
+    }
+  },
+  "clients": [
+    {
+      "clientId": "beacon-pilot",
+      "name": "Beacon Pilot Frontend",
+      "description": "SPA client for Beacon Pilot",
+      "rootUrl": "http://127.0.0.1:5173",
+      "adminUrl": "http://127.0.0.1:5173",
+      "baseUrl": "/",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "dev-secret-change-in-production",
+      "redirectUris": [
+        "http://127.0.0.1:5173/callback",
+        "http://127.0.0.1:5173/*"
+      ],
+      "webOrigins": [
+        "http://127.0.0.1:5173"
+      ],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "access.token.lifespan": "300",
+        "client.secret.creation.time": "0"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "name": "roles mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "multivalued": "true",
+            "user.attribute": "roles",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true"
+          }
+        },
+        {
+          "name": "email mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "config": {
+            "user.attribute": "email",
+            "claim.name": "email",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true"
+          }
+        },
+        {
+          "name": "username mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "openid",
+        "profile",
+        "email",
+        "roles"
+      ],
+      "optionalClientScopes": []
+    }
+  ],
+  "users": [
+    {
+      "username": "demo",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Demo",
+      "lastName": "User",
+      "email": "demo@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["viewer"],
+      "clientRoles": {
+        "beacon-pilot": ["viewer"]
+      }
+    },
+    {
+      "username": "operator",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Operator",
+      "lastName": "User",
+      "email": "operator@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "operator",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["operator"],
+      "clientRoles": {
+        "beacon-pilot": ["operator"]
+      }
+    }
+  ]
+}
