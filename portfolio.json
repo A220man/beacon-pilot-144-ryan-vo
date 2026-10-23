@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "beacon-pilot-144-ryan-vo",
+  "owner": "A220man",
+  "email": "ryandtvo@gmail.com",
+  "domain": "AI/ML developer tools",
+  "summary": "Work in progress: beacon-pilot-144-ryan-vo",
+  "workflows": [
+    "Create and evaluate agent skills with deterministic scoring algorithms",
+    "Detect model drift across releases using confidence-band comparisons",
+    "Manage repository memory capsules with Git-aware freshness validation"
+  ],
+  "auth": "oidc-keycloak-saml-broker",
+  "llm_providers": [
+    "openai-compatible",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "status": "work-in-progress"
+}

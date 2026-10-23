@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "beacon-pilot"
+version = "1.0.0"
+description = "Production-grade skill evaluation and drift detection for AI coding agents"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+  {name = "Ryan Vo", email = "ryandtvo@gmail.com"}
+]
+maintainers = [
+  {name = "Ryan Vo", email = "ryandtvo@gmail.com"}
+]
+keywords = ["ai", "ml", "agent", "skill", "evaluation", "drift-detection"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.23",
+  "httpx>=0.27",
+  "ruff>=0.5",
+  "mypy>=1.10",
+]
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["backend"]
+asyncio_mode = "auto"
+testpaths = ["backend/tests"]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+select = ["E", "F", "I", "W", "UP", "B", "C4", "PTH"]
+ignore = ["E501", "B008"]
+fixable = ["E", "F", "I", "W", "UP", "B", "C4", "PTH"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+strict_optional = true
