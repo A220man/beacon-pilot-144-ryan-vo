@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.0.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -17,7 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OIDC/Keycloak authentication (demo mode binder)
 - Docker Compose with backend, frontend, Keycloak
 - CI workflow for backend and frontend tests
-- Portfolio.json, README, LICENSE
+  - Skill evaluation engine with deterministic scoring
+  - Evaluation runner service with confidence bands and drift comparison
+  - Evaluation detail page with results visualization
+  - Frontend date-fns dependency for date formatting
 
 ### Fixed
 - Frontend TypeScript compilation errors (duplicate attributes, unused imports, undefined data access)

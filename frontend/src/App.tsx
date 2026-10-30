@@ -1,4 +1,5 @@
 import { Layout } from "./components/Layout";
+import { EvaluationDetail } from "./pages/EvaluationDetail";
 import { useAuth } from "./hooks/useAuth";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
@@ -30,7 +31,7 @@ export function App() {
           {window.location.pathname === "/dashboard" && <Dashboard />}
           {window.location.pathname === "/skills" && <SkillsPage />}
           {window.location.pathname === "/evaluations" && <EvaluationsPage />}
-          {window.location.pathname.startsWith("/evaluations/") && <EvaluationsPage />}
+          {window.location.pathname.match(/^\/evaluations\/\d+$/) && <EvaluationDetail />}
           {window.location.pathname === "/capsules" && <CapsulesPage />}
           {window.location.pathname === "/drift" && <DriftPage />}
           {window.location.pathname === "/settings" && <div>Settings - TODO</div>}
