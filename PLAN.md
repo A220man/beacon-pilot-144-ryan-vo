@@ -27,7 +27,7 @@ Tests: `backend/tests/test_health.py`, `backend/tests/test_auth.py`, `backend/te
 
 ### skill-eval-engine — Skill evaluation engine with deterministic scoring
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - Skill schema validation and loading
@@ -35,6 +35,10 @@ Acceptance:
 - API endpoints for skill CRUD and evaluation
 - Frontend dashboard for skill management
 - At least 3 complete workflows: create skill, run eval, view results
+
+Implementation: `backend/app/api/evaluations.py`, `backend/app/services/evaluation_runner.py`, `backend/app/models/__init__.py`, `frontend/src/pages/Evaluations.tsx`, `frontend/src/pages/EvaluationDetail.tsx`, `frontend/src/hooks/useEvaluations.ts`, `frontend/src/api/client.ts`
+
+Tests: `backend/tests/test_evaluations.py`, `frontend/tests/components.test.tsx`
 
 ### drift-detection — Model drift detection across releases
 

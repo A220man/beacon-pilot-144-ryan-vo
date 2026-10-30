@@ -45,3 +45,4 @@ logs/
 frontend/dist/
 frontend/.vite/
 frontend/coverage/
+venv/
