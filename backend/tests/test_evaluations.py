@@ -11,7 +11,7 @@ async def test_create_evaluation_unauthorized(client: AsyncClient):
         "skill_id": 1,
         "model_name": "test-model",
         "model_version": "1.0",
-        "input_data": '{"n_runs": 3}',
+        "input_data": '{"n_runs": 5}'
     })
     assert response.status_code == 401
 
@@ -29,8 +29,8 @@ async def test_run_evaluation_deterministic(client: AsyncClient, test_db):
         skill_id=skill.id,
         model_name="test-model",
         model_version="1.0",
-        status="pending",
-        input_data='{"n_runs": 3}',
+        input_data='{"n_runs": 5}',
+        status="pending"
     )
     test_db.add(evaluation)
     await test_db.commit()
@@ -57,8 +57,8 @@ async def test_evaluation_runner_deterministic(test_db):
         skill_id=skill.id,
         model_name="test-model",
         model_version="1.0",
-        status="pending",
         input_data='{"n_runs": 5}',
+        status="pending"
     )
 
     result = await run_deterministic_evaluation(evaluation, test_db)
@@ -85,9 +85,8 @@ async def test_drift_comparison():
 
     result = compare_evaluations(baseline, current)
     
-    assert result["bands_separate"] == True
-    assert abs(result["mean_difference"] - (-0.10)) < 1e-10
-    assert result["regression"] == True
+    assert result["significant"] == True
+    assert abs(result["difference"] - (-0.10)) < 1e-10
     assert result["verdict"] == "regression"
 
 
@@ -100,6 +99,5 @@ async def test_drift_within_noise():
 
     result = compare_evaluations(baseline, current)
     
-    assert result["bands_separate"] == False
-    assert result["regression"] == False
+    assert result["significant"] == False
     assert result["verdict"] == "within_noise"
