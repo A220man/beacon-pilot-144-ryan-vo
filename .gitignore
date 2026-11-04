@@ -46,3 +46,12 @@ frontend/dist/
 frontend/.vite/
 frontend/coverage/
 venv/
+.turbo/
+.env.*.local
+**/data/media/
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm
