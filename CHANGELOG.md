@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.2.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -35,3 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vite proxy configuration typo (health endpoint)
 - Backend database directory creation for SQLite
 - Frontend test imports to use component index
+
+## [1.2.0] - 2026-11-07
+
+### Fixed
+- Drift comparison: confidence bands that touch (no meaningful overlap) now correctly register as significant drift (regression/improvement) instead of within_noise

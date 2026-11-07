@@ -145,8 +145,8 @@ def compare_evaluations(baseline: dict, current: dict) -> dict[str, Any]:
 
     effect_floor = baseline.get("effect_floor", current.get("effect_floor", 0.05))
 
-    # Check if confidence bands separate
-    bands_separate = current_low > baseline_high or baseline_low > current_high
+    # Check if confidence bands separate (or touch - no meaningful overlap)
+    bands_separate = current_low >= baseline_high or baseline_low >= current_high
 
     # Check if difference exceeds effect floor
     difference = current_mean - baseline_mean
