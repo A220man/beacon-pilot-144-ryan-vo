@@ -101,3 +101,48 @@ async def test_drift_within_noise():
     
     assert result["significant"] == False
     assert result["verdict"] == "within_noise"
+
+
+@pytest.mark.asyncio
+async def test_evaluation_runner_cross_process_deterministic(tmp_path):
+    """Verify that evaluation results are identical across separate Python processes.
+    This ensures the deterministic engine uses stable hashing (not Python's randomized hash()).
+    """
+    import subprocess
+    import sys
+
+    test_code = (
+        "import asyncio\n"
+        "import sys\n"
+        "sys.path.insert(0, \".\")\n"
+        "from app.services.evaluation_runner import run_deterministic_evaluation\n"
+        "from app.models import Skill, Evaluation\n"
+        "\n"
+        "class MockDB:\n"
+        "    async def get(self, model, id):\n"
+        "        if model == Skill:\n"
+        "            return Skill(id=1, owner_id=1, name=\"Test\", slug=\"test\", description=\"Test\", schema_json='{\"criteria\": [{\"name\": \"accuracy\", \"weight\": 1.0, \"min_score\": 0.5}]}')\n"
+        "        return None\n"
+        "\n"
+        "async def test():\n"
+        "    eval = Evaluation(owner_id=1, skill_id=1, model_name=\"test-model\", model_version=\"1.0\", input_data='{\"n_runs\": 5}', status=\"pending\")\n"
+        "    db = MockDB()\n"
+        "    result = await run_deterministic_evaluation(eval, db)\n"
+        "    return result[\"score\"], result[\"confidence_low\"], result[\"confidence_high\"]\n"
+        "\n"
+        "r = asyncio.run(test())\n"
+        f"print(f\"{{r[0]}}|{{r[1]}}|{{r[2]}}\")\n"
+    )
+    # Run in two separate processes
+    proc1 = subprocess.run([sys.executable, "-c", test_code], capture_output=True, text=True, cwd="/var/lib/alan-portfolio/workspaces/ryan/beacon-pilot-144-ryan-vo/backend")
+    proc2 = subprocess.run([sys.executable, "-c", test_code], capture_output=True, text=True, cwd="/var/lib/alan-portfolio/workspaces/ryan/beacon-pilot-144-ryan-vo/backend")
+
+    assert proc1.returncode == 0, f"Process 1 failed: {proc1.stderr}"
+    assert proc2.returncode == 0, f"Process 2 failed: {proc2.stderr}"
+
+    # Results should be identical
+    result1 = proc1.stdout.strip()
+    result2 = proc2.stdout.strip()
+    assert result1 == result2, f"Cross-process determinism failed: {result1} != {result2}"
+
+

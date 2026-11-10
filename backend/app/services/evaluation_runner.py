@@ -1,3 +1,4 @@
+import hashlib
 import json
 import random
 from typing import Any
@@ -5,6 +6,11 @@ from typing import Any
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Evaluation, Skill
+
+
+def _stable_hash(s: str) -> int:
+    """Generate a stable hash for deterministic seeding across Python processes."""
+    return int(hashlib.md5(s.encode()).hexdigest(), 16)
 
 
 async def run_deterministic_evaluation(evaluation: Evaluation, db: AsyncSession) -> dict[str, Any]:
@@ -28,7 +34,7 @@ async def run_deterministic_evaluation(evaluation: Evaluation, db: AsyncSession)
 
     for i in range(n_runs):
         # Deterministic pseudo-random based on seed
-        seed = hash(f"{evaluation.model_name}:{evaluation.model_version}:{skill.slug}:{i}")
+        seed = _stable_hash(f"{evaluation.model_name}:{evaluation.model_version}:{skill.slug}:{i}")
         random.seed(seed)
 
         # Score based on skill schema criteria
@@ -80,7 +86,7 @@ async def run_deterministic_evaluation(evaluation: Evaluation, db: AsyncSession)
         criterion_scores = {}
         for criterion_name, config in criteria_weights.items():
             # Deterministic per-criterion variation
-            crit_seed = hash(f"{seed}:{criterion_name}")
+            crit_seed = _stable_hash(f"{seed}:{criterion_name}")
             random.seed(crit_seed)
             crit_variance = variance * 0.5
             crit_score = max(0.0, min(1.0, base_score + random.uniform(-crit_variance, crit_variance)))

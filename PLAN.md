@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-skeleton
+skill-eval-engine
 
 ## Roadmap
 
@@ -27,7 +27,7 @@ Tests: `backend/tests/test_health.py`, `backend/tests/test_auth.py`, `backend/te
 
 ### skill-eval-engine — Skill evaluation engine with deterministic scoring
 
-Status: in_progress
+Status: done
 
 Acceptance:
 - Skill schema validation and loading
