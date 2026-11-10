@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "skeleton",
+  "current_feature": "skill-eval-engine",
   "features": [
     {
       "id": "skeleton",
@@ -86,7 +86,7 @@
     {
       "id": "skill-eval-engine",
       "title": "Skill evaluation engine with deterministic scoring",
-      "status": "in_progress",
+      "status": "done",
       "acceptance": [
         "Skill schema validation and loading",
         "Deterministic evaluation runner (no LLM required)",
