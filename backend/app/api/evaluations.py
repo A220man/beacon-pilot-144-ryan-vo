@@ -177,4 +177,13 @@ async def run_evaluation(
 
     await db.commit()
     await db.refresh(evaluation)
-    return evaluation_to_response(evaluation)
+    return evaluation_to_response(evaluation)@router.post("/{evaluation_id}/drift", response_model=dict)
+async def drift_detection(
+    evaluation_id: int,
+    user: User = Depends(require_role(Role.OPERATOR, Role.ADMIN)),
+    db: AsyncSession = Depends(get_db),
+):
+    """Run drift detection for an evaluation."""
+    from app.services.drift_detection import detect_drift
+    return await detect_drift(evaluation_id, db)
+# TEST LINE
