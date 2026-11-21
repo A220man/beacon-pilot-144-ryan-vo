@@ -111,15 +111,24 @@
     {
       "id": "drift-detection",
       "title": "Model drift detection across releases",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Drift detection algorithm with confidence bands",
         "Historical result storage and comparison",
         "API for drift reports",
         "Frontend visualization of drift trends"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/services/drift_detection.py",
+        "backend/app/services/evaluation_runner.py (compare_evaluations)",
+        "backend/app/api/evaluations.py (drift_detection endpoint)",
+        "frontend/src/api/client.ts (evaluationsApi.drift)",
+        "frontend/src/hooks/useDrift.ts",
+        "frontend/src/pages/Drift.tsx"
+      ],
+      "tests": [
+        "backend/tests/test_evaluations.py (test_drift_comparison, test_drift_within_noise)"
+      ]
     },
     {
       "id": "repository-memory",
