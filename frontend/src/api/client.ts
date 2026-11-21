@@ -84,6 +84,7 @@ export const evaluationsApi = {
   get: (id: number) => api.get(`/api/evaluations/${id}`),
   create: (data: any) => api.post("/api/evaluations", data),
   run: (id: number) => api.post(`/api/evaluations/${id}/run`),
+  drift: (id: number) => api.post(`/api/evaluations/${id}/drift`),
 };
 
 // Capsules

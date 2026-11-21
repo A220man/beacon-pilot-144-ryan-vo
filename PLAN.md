@@ -42,13 +42,17 @@ Tests: `backend/tests/test_evaluations.py`, `frontend/tests/components.test.tsx`
 
 ### drift-detection — Model drift detection across releases
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - Drift detection algorithm with confidence bands
 - Historical result storage and comparison
 - API for drift reports
 - Frontend visualization of drift trends
+
+Implementation: `backend/app/services/drift_detection.py`, `backend/app/services/evaluation_runner.py (compare_evaluations)`, `backend/app/api/evaluations.py (drift_detection endpoint)`, `frontend/src/api/client.ts (evaluationsApi.drift)`, `frontend/src/hooks/useDrift.ts`, `frontend/src/pages/Drift.tsx`
+
+Tests: `backend/tests/test_evaluations.py (test_drift_comparison, test_drift_within_noise)`
 
 ### repository-memory — Repository memory capsules (AGENT_MEMORY.md)
 
