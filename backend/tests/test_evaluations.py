@@ -146,3 +146,17 @@ async def test_evaluation_runner_cross_process_deterministic(tmp_path):
     assert result1 == result2, f"Cross-process determinism failed: {result1} != {result2}"
 
 
+
+@pytest.mark.asyncio
+async def test_drift_improvement():
+    """Test compare_evaluations returns 'improvement' verdict when current mean > baseline mean and bands separate."""
+    from app.services.evaluation_runner import compare_evaluations
+
+    baseline = {"mean": 0.70, "confidence_low": 0.65, "confidence_high": 0.75}
+    current = {"mean": 0.80, "confidence_low": 0.85, "confidence_high": 0.90}
+
+    result = compare_evaluations(baseline, current)
+
+    assert result["significant"] == True
+    assert abs(result["difference"] - 0.10) < 1e-10
+    assert result["verdict"] == "improvement"
